@@ -1,0 +1,30 @@
+# backend/db/database.py
+import psycopg2
+from datetime import datetime
+
+DB_CONFIG = {
+    "host": "localhost",
+    "port": 5432,
+    "database": "smart_parking",
+    "user": "postgres",
+    "password": "password"
+}
+
+def log_parking_status(vehicle_count, anomaly):
+    conn = psycopg2.connect(**DB_CONFIG)
+    cur = conn.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS parking_logs (
+            id SERIAL PRIMARY KEY,
+            timestamp TIMESTAMP,
+            vehicle_count INT,
+            anomaly BOOLEAN
+        )
+    """)
+    cur.execute("""
+        INSERT INTO parking_logs (timestamp, vehicle_count, anomaly)
+        VALUES (%s, %s, %s)
+    """, (datetime.now(), vehicle_count, anomaly))
+    conn.commit()
+    cur.close()
+    conn.close()

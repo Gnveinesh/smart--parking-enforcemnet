@@ -1,0 +1,18 @@
+# backend/vision/vehicle_counter.py
+import cv2
+
+VIDEO_PATH = "sample_parking.mp4"
+
+def count_vehicles():
+    cap = cv2.VideoCapture(VIDEO_PATH)
+    car_cascade = cv2.CascadeClassifier("backend/vision/YOLO Model")
+    vehicle_count = 0
+    
+    ret, frame = cap.read()
+    if ret:
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        cars = car_cascade.detectMultiScale(gray, 1.1, 1)
+        vehicle_count = len(cars)
+    
+    cap.release()
+    return vehicle_count

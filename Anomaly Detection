@@ -1,0 +1,6 @@
+# backend/ml/anomaly_detection.py
+def detect_anomaly(vehicle_count):
+    # Dummy rule-based anomaly detection
+    if vehicle_count > 100:
+        return True
+    return False

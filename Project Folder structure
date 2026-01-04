@@ -1,0 +1,27 @@
+smart-parking-enforcement/
+│
+├── backend/
+│   ├── __init__.py
+│   ├── backend.py               # FastAPI backend
+│   ├── vehicle_counter.py       # OpenCV vehicle detection
+│   ├── ml_models.py             # ML training
+│   ├── models/
+│   │   ├── log_model.pkl
+│   │   └── rf_model.pkl
+│   └── requirements.txt         # Python dependencies
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── App.js
+│   │   ├── Dashboard.js
+│   │   └── api.js
+│   └── package.json
+│
+├── database/
+│   └── schema.sql
+│
+├── demo_video.mp4               # Sample video
+├── cars.xml                     # Haar cascade
+├── README.md
+└── docker-compose.yml

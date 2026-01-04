@@ -1,0 +1,24 @@
+// frontend/src/App.js
+import React, { useEffect, useState } from "react";
+import StatusCard from "./components/StatusCard";
+
+function App() {
+  const [data, setData] = useState({ current_count: 0, anomaly_detected: false, predicted_demand: "Low Demand" });
+
+  useEffect(() => {
+    fetch("http://localhost:8000/parking/status")
+      .then(res => res.json())
+      .then(setData);
+  }, []);
+
+  return (
+    <div className="App">
+      <h1>Smart Parking Dashboard</h1>
+      <StatusCard title="Current Vehicles" value={data.current_count} />
+      <StatusCard title="Anomaly Detected" value={data.anomaly_detected.toString()} />
+      <StatusCard title="Predicted Demand" value={data.predicted_demand} />
+    </div>
+  );
+}
+
+export default App;

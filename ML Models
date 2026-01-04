@@ -1,0 +1,11 @@
+# backend/ml/demand_prediction.py
+import numpy as np
+
+def predict_demand(current_count):
+    # Dummy model logic for demonstration
+    # Replace with trained LogisticRegression or RandomForest model
+    if current_count > 50:
+        return "High Demand"
+    elif current_count > 20:
+        return "Moderate Demand"
+    return "Low Demand"

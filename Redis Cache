@@ -1,0 +1,11 @@
+# backend/cache/redis_cache.py
+import redis
+
+r = redis.Redis(host='localhost', port=6379, db=0)
+
+def set_cache(key, value):
+    r.set(key, value)
+
+def get_cache(key):
+    val = r.get(key)
+    return int(val) if val else None

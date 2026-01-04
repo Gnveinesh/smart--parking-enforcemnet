@@ -1,0 +1,31 @@
+
+from fastapi import FastAPI
+from backend.vision.vehicle_counter import count_vehicles
+from backend.ml.demand_prediction import predict_demand
+from backend.ml.anomaly_detection import detect_anomaly
+from backend.db.database import log_parking_status
+from backend.cache.redis_cache import set_cache, get_cache
+
+app = FastAPI(title="Smart Parking Capacity Enforcement")
+
+@app.get("/parking/status")
+def get_parking_status():
+    vehicle_count = count_vehicles()
+    anomaly = detect_anomaly(vehicle_count)
+    predicted_demand = predict_demand(vehicle_count)
+    
+    # Store in database
+    log_parking_status(vehicle_count, anomaly)
+    
+    # Store in Redis cache
+    set_cache("current_vehicle_count", vehicle_count)
+    
+    return {
+        "current_count": vehicle_count,
+        "anomaly_detected": anomaly,
+        "predicted_demand": predicted_demand
+    }
+
+@app.get("/parking/cache")
+def get_cache_status():
+    return {"cached_count": get_cache("current_vehicle_count")}
